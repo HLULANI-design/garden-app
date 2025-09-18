@@ -1,7 +1,21 @@
 
 
+
 // Gardening advice data
-// TODO: Replace hardcoded values with constants or configuration
+const SEASONS = {
+  Spring: ["March", "April", "May"],
+  Summer: ["June", "July", "August"],
+  Autumn: ["September", "October", "November"],
+  Winter: ["December", "January", "February"]
+};
+
+const SEASON_ADVICE = {
+  Spring: "Spring is great for planting vegetables and flowers.",
+  Summer: "Water deeply and harvest your crops regularly.",
+  Autumn: "Prepare your soil and compost fallen leaves.",
+  Winter: "Protect your plants from frost and plan ahead."
+};
+
 const adviceByMonth = {
   January: "Prepare the soil and plan your garden for the new year.",
   February: "Start planting early vegetables indoors.",
@@ -32,23 +46,29 @@ function getAdviceByMonth(month) {
 }
 
 
+
 /**
- * Get gardening advice for a given season.
- * @param {string} season - The name of the season (e.g., "Winter").
+ * Get gardening advice for a given season or month.
+ * @param {string} input - The name of the season (e.g., "Winter") or month (e.g., "March").
  * @returns {string} Gardening advice for the season, or an error message if input is invalid.
  */
-function getAdviceBySeason(season) {
-  if (season === "Spring") {
-    return "Spring is great for planting vegetables and flowers.";
-  } else if (season === "Summer") {
-    return "Water deeply and harvest your crops regularly.";
-  } else if (season === "Autumn") {
-    return "Prepare your soil and compost fallen leaves.";
-  } else if (season === "Winter") {
-    return "Protect your plants from frost and plan ahead.";
-  } else {
-    return "No advice available for this season.";
+function getAdviceBySeason(input) {
+  if (typeof input !== 'string' || !input.trim()) {
+    return "Invalid input: Please provide a valid season or month name.";
   }
+  // Normalize input
+  const formattedInput = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+  // Check if input is a season
+  if (SEASONS[formattedInput]) {
+    return SEASON_ADVICE[formattedInput] || "No advice available for this season.";
+  }
+  // Check if input is a month and find its season
+  for (const [season, months] of Object.entries(SEASONS)) {
+    if (months.includes(formattedInput)) {
+      return SEASON_ADVICE[season];
+    }
+  }
+  return "No advice available for this season or month.";
 }
 
 // Example usage
