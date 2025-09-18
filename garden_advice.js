@@ -1,4 +1,5 @@
 
+
 // Gardening advice data
 // TODO: Replace hardcoded values with constants or configuration
 const adviceByMonth = {
@@ -16,14 +17,26 @@ const adviceByMonth = {
   December: "Review your gardening year and plan for next season."
 };
 
-// Function to get advice by month
-// TODO: Add validation for incorrect month input
+
+/**
+ * Get gardening advice for a given month.
+ * @param {string} month - The name of the month (e.g., "March").
+ * @returns {string} Gardening advice for the month, or an error message if input is invalid.
+ */
 function getAdviceByMonth(month) {
-  return adviceByMonth[month] || "No advice available for this month.";
+  if (typeof month !== 'string' || !month.trim()) {
+    return "Invalid input: Please provide a valid month name.";
+  }
+  const formattedMonth = month.charAt(0).toUpperCase() + month.slice(1).toLowerCase();
+  return adviceByMonth[formattedMonth] || "No advice available for this month.";
 }
 
-// Function to get advice by season
-// TODO: Implement logic to group months into seasons dynamically
+
+/**
+ * Get gardening advice for a given season.
+ * @param {string} season - The name of the season (e.g., "Winter").
+ * @returns {string} Gardening advice for the season, or an error message if input is invalid.
+ */
 function getAdviceBySeason(season) {
   if (season === "Spring") {
     return "Spring is great for planting vegetables and flowers.";
